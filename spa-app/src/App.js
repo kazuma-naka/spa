@@ -1,21 +1,36 @@
+import React, { useState } from "react";
+import MemoList from "./components/MemoList.js";
 import "./App.css";
 
 function App() {
+  const [memos, setMemos] = useState([]);
+  const [selectedMemo, setSelectedMemo] = useState(null);
+
+  const addMemo = (title, content) => {
+    const newMemo = { title, content };
+    setMemos([...memos, newMemo]);
+  };
+
+  const editMemo = (newContent) => {
+    setMemos(
+      memos.map((memo) =>
+        memo === selectedMemo ? { ...memo, content: newContent } : memo
+      )
+    );
+  };
+
+  const deleteMemo = () => {
+    setMemos(memos.filter((memo) => memo !== selectedMemo));
+    setSelectedMemo(null);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <MemoList
+        memos={memos}
+        setSelectedMemo={setSelectedMemo}
+        addMemo={addMemo}
+      />
     </div>
   );
 }
