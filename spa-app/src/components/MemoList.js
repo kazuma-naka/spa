@@ -16,7 +16,7 @@ const MemoList = ({ memos, setSelectedMemo, addMemo }) => {
           </li>
         ))}
       </ul>
-      <button onClick={() => addMemo("New Memo", "New memo content")}>+</button>
+      <button onClick={() => addMemo("新規メモ", "")}>+</button>
     </div>
   );
 };
