@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
-const MemoList = ({ memos, setSelectedMemo, selectedMemo, addMemo }) => {
+const MemoList = ({
+  memos,
+  setMemos,
+  setSelectedMemo,
+  selectedMemo,
+  addMemo,
+}) => {
+  useEffect(() => {
+    const storedMemos = JSON.parse(localStorage.getItem("memos")) || [];
+    setMemos(storedMemos);
+  }, [setMemos]);
+
   return (
     <div className="memo-list-container">
       <ul className="memo-list">
@@ -33,8 +44,9 @@ MemoList.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
+  setMemos: PropTypes.func.isRequired,
   setSelectedMemo: PropTypes.func.isRequired,
   selectedMemo: PropTypes.object,
   addMemo: PropTypes.func.isRequired,

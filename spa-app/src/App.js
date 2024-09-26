@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MemoList from "./components/MemoList.js";
 import MemoEditor from "./components/MemoEditor.js";
 import "./App.css";
@@ -7,6 +7,17 @@ import String from "./String.js";
 function App() {
   const [memos, setMemos] = useState([]);
   const [selectedMemo, setSelectedMemo] = useState(null);
+
+  useEffect(() => {
+    const storedMemos = JSON.parse(localStorage.getItem("memos")) || [];
+    setMemos(storedMemos);
+  }, []);
+
+  useEffect(() => {
+    if (memos.length > 0) {
+      localStorage.setItem("memos", JSON.stringify(memos));
+    }
+  }, [memos]);
 
   const addMemo = (content) => {
     const title = String.uniqueTitle(content, memos);
@@ -23,7 +34,7 @@ function App() {
       content: newContent,
     };
     const updatedMemos = memos.map((memo) =>
-      memo === selectedMemo ? updatedMemo : memo
+      memo === selectedMemo ? updatedMemo : memo,
     );
     setMemos(updatedMemos);
     setSelectedMemo(updatedMemo);
@@ -44,13 +55,16 @@ function App() {
       <div className="app-container">
         <MemoList
           memos={memos}
-          setSelectedMemo={setSelectedMemo}
+          setMemos={setMemos}
           selectedMemo={selectedMemo}
+          setSelectedMemo={setSelectedMemo}
           addMemo={addMemo}
         />
         {selectedMemo && (
           <MemoEditor
             selectedMemo={selectedMemo}
+            memos={memos}
+            setMemos={setMemos}
             saveMemo={saveMemo}
             deleteMemo={deleteMemo}
           />
