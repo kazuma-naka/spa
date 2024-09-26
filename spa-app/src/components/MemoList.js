@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 const MemoList = ({ memos, setSelectedMemo, addMemo }) => {
   return (
     <div className="memo-list-container">
-      <h2 className="current-state">一覧</h2>
       <ul className="memo-list">
         {memos.map((memo, index) => (
           <li

@@ -35,19 +35,26 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <MemoList
-        memos={memos}
-        setSelectedMemo={setSelectedMemo}
-        addMemo={addMemo}
-      />
-      {selectedMemo && (
-        <MemoEditor
-          selectedMemo={selectedMemo}
-          saveMemo={saveMemo}
-          deleteMemo={deleteMemo}
+    <div className="app-area">
+      <div className="status-text-parent">
+        <h2 className="status-text">
+          {selectedMemo ? `編集 ${selectedMemo.title}` : "一覧"}
+        </h2>
+      </div>
+      <div className="app-container">
+        <MemoList
+          memos={memos}
+          setSelectedMemo={setSelectedMemo}
+          addMemo={addMemo}
         />
-      )}
+        {selectedMemo && (
+          <MemoEditor
+            selectedMemo={selectedMemo}
+            saveMemo={saveMemo}
+            deleteMemo={deleteMemo}
+          />
+        )}
+      </div>
     </div>
   );
 }
