@@ -9,7 +9,10 @@ const MemoList = ({ memos, setSelectedMemo, addMemo }) => {
         {memos.map((memo, index) => (
           <li
             key={index}
-            onClick={() => setSelectedMemo(memo)}
+            onClick={() => {
+              setSelectedMemo(memo);
+              console.log(`title:${memo.title}\ncontent: ${memo.content}`);
+            }}
             style={{ cursor: "pointer" }}
           >
             {memo.title}
@@ -26,7 +29,7 @@ MemoList.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   setSelectedMemo: PropTypes.func.isRequired,
   addMemo: PropTypes.func.isRequired,

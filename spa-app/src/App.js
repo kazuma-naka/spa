@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import MemoList from "./components/MemoList.js";
+import MemoEditor from "./components/MemoEditor.js";
 import "./App.css";
 
 function App() {
@@ -9,14 +10,11 @@ function App() {
   const addMemo = (title, content) => {
     const newMemo = { title, content };
     setMemos([...memos, newMemo]);
+    setSelectedMemo(newMemo);
   };
 
-  const editMemo = (newContent) => {
-    setMemos(
-      memos.map((memo) =>
-        memo === selectedMemo ? { ...memo, content: newContent } : memo
-      )
-    );
+  const saveMemo = () => {
+    console.log("save memo button click");
   };
 
   const deleteMemo = () => {
@@ -31,6 +29,13 @@ function App() {
         setSelectedMemo={setSelectedMemo}
         addMemo={addMemo}
       />
+      {selectedMemo && (
+        <MemoEditor
+          selectedMemo={selectedMemo}
+          saveMemo={saveMemo}
+          deleteMemo={deleteMemo}
+        />
+      )}
     </div>
   );
 }
