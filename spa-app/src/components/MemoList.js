@@ -19,7 +19,7 @@ const MemoList = ({ memos, setSelectedMemo, addMemo }) => {
           </li>
         ))}
       </ul>
-      <button onClick={() => addMemo("新規メモ", "")}>+</button>
+      <button onClick={() => addMemo("新規メモ", memos)}>+</button>
     </div>
   );
 };
@@ -29,7 +29,7 @@ MemoList.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   setSelectedMemo: PropTypes.func.isRequired,
   addMemo: PropTypes.func.isRequired,

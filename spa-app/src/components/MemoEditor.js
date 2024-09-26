@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 const MemoEditor = ({ selectedMemo, saveMemo, deleteMemo }) => {
+  const [content, setContent] = useState(selectedMemo?.content || "");
+
+  useEffect(() => {
+    setContent(selectedMemo?.content || "");
+  }, [selectedMemo]);
+
+  const handleContentChange = (e) => {
+    setContent(e.target.value);
+  };
+
   return (
     <div className="memo-editor-container">
-      <textarea className="memo-textarea" value={selectedMemo?.content || ""} />
+      <textarea
+        className="memo-textarea"
+        value={content}
+        onChange={handleContentChange}
+      />
       <div className="memo-editor-buttons">
-        <button className="memo-edit-button" onClick={() => saveMemo()}>
+        <button className="memo-edit-button" onClick={() => saveMemo(content)}>
           編集
         </button>
         <button className="memo-delete-button" onClick={deleteMemo}>
