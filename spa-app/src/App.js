@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import MemoList from "./components/MemoList.js";
 import MemoEditor from "./components/MemoEditor.js";
 import "./App.css";
@@ -19,14 +19,14 @@ function App() {
     }
   }, [memos]);
 
-  const addMemo = (content) => {
+  const addMemo = useCallback((content) => {
     const title = String.uniqueTitle(content, memos);
     const newMemo = { title, content };
-    setMemos([...memos, newMemo]);
+    setMemos((prevMemos) => [...prevMemos, newMemo]);
     setSelectedMemo(newMemo);
-  };
+  }, [memos]);
 
-  const saveMemo = (newContent) => {
+  const saveMemo = useCallback((newContent) => {
     const newTitle = String.uniqueTitle(newContent, memos);
     const updatedMemo = {
       ...selectedMemo,
@@ -38,12 +38,14 @@ function App() {
     );
     setMemos(updatedMemos);
     setSelectedMemo(updatedMemo);
-  };
+  }, [memos, selectedMemo]);
 
-  const deleteMemo = () => {
+  const deleteMemo = useCallback(() => {
     setMemos(memos.filter((memo) => memo !== selectedMemo));
     setSelectedMemo(null);
-  };
+  }, [memos, selectedMemo]);
+
+  const memoizedMemos = useMemo(() => memos, [memos]);
 
   return (
     <div className="app-area">
@@ -54,7 +56,7 @@ function App() {
       </div>
       <div className="app-container">
         <MemoList
-          memos={memos}
+          memos={memoizedMemos}
           setMemos={setMemos}
           selectedMemo={selectedMemo}
           setSelectedMemo={setSelectedMemo}
@@ -62,11 +64,11 @@ function App() {
         />
         {selectedMemo && (
           <MemoEditor
-            selectedMemo={selectedMemo}
-            memos={memos}
-            setMemos={setMemos}
-            saveMemo={saveMemo}
-            deleteMemo={deleteMemo}
+          selectedMemo={selectedMemo}
+          memos={memoizedMemos}
+          setMemos={setMemos}
+          saveMemo={saveMemo}
+          deleteMemo={deleteMemo}
           />
         )}
       </div>
