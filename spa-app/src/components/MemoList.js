@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const MemoList = ({ memos, setSelectedMemo, addMemo }) => {
+const MemoList = ({ memos, setSelectedMemo, selectedMemo, addMemo }) => {
   return (
     <div className="memo-list-container">
       <ul className="memo-list">
@@ -10,9 +10,14 @@ const MemoList = ({ memos, setSelectedMemo, addMemo }) => {
             key={index}
             onClick={() => {
               setSelectedMemo(memo);
-              console.log(`title:${memo.title}\ncontent: ${memo.content}`);
             }}
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+              backgroundColor:
+                selectedMemo === memo ? "#4b4f57" : "transparent",
+              color: selectedMemo === memo ? "white" : "#ccc",
+              padding: selectedMemo === memo ? "1px" : "4px",
+            }}
           >
             {memo.title}
           </li>
@@ -31,6 +36,7 @@ MemoList.propTypes = {
     })
   ).isRequired,
   setSelectedMemo: PropTypes.func.isRequired,
+  selectedMemo: PropTypes.object,
   addMemo: PropTypes.func.isRequired,
 };
 

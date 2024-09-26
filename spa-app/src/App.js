@@ -45,6 +45,7 @@ function App() {
         <MemoList
           memos={memos}
           setSelectedMemo={setSelectedMemo}
+          selectedMemo={selectedMemo}
           addMemo={addMemo}
         />
         {selectedMemo && (

@@ -48,8 +48,8 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
+  border-radius: 4px;
 }
-
 
 button {
   width: 8vh;
