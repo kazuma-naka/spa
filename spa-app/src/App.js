@@ -19,26 +19,32 @@ function App() {
     }
   }, [memos]);
 
-  const addMemo = useCallback((content) => {
-    const title = String.uniqueTitle(content, memos);
-    const newMemo = { title, content };
-    setMemos((prevMemos) => [...prevMemos, newMemo]);
-    setSelectedMemo(newMemo);
-  }, [memos]);
+  const addMemo = useCallback(
+    (content) => {
+      const title = String.uniqueTitle(content, memos);
+      const newMemo = { title, content };
+      setMemos((prevMemos) => [...prevMemos, newMemo]);
+      setSelectedMemo(newMemo);
+    },
+    [memos],
+  );
 
-  const saveMemo = useCallback((newContent) => {
-    const newTitle = String.uniqueTitle(newContent, memos);
-    const updatedMemo = {
-      ...selectedMemo,
-      title: newTitle,
-      content: newContent,
-    };
-    const updatedMemos = memos.map((memo) =>
-      memo === selectedMemo ? updatedMemo : memo,
-    );
-    setMemos(updatedMemos);
-    setSelectedMemo(updatedMemo);
-  }, [memos, selectedMemo]);
+  const saveMemo = useCallback(
+    (newContent) => {
+      const newTitle = String.uniqueTitle(newContent, memos);
+      const updatedMemo = {
+        ...selectedMemo,
+        title: newTitle,
+        content: newContent,
+      };
+      const updatedMemos = memos.map((memo) =>
+        memo === selectedMemo ? updatedMemo : memo,
+      );
+      setMemos(updatedMemos);
+      setSelectedMemo(updatedMemo);
+    },
+    [memos, selectedMemo],
+  );
 
   const deleteMemo = useCallback(() => {
     setMemos(memos.filter((memo) => memo !== selectedMemo));
@@ -64,11 +70,11 @@ function App() {
         />
         {selectedMemo && (
           <MemoEditor
-          selectedMemo={selectedMemo}
-          memos={memoizedMemos}
-          setMemos={setMemos}
-          saveMemo={saveMemo}
-          deleteMemo={deleteMemo}
+            selectedMemo={selectedMemo}
+            memos={memoizedMemos}
+            setMemos={setMemos}
+            saveMemo={saveMemo}
+            deleteMemo={deleteMemo}
           />
         )}
       </div>
