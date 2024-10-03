@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-const MemoEditor = ({
-  selectedMemo,
-  memos,
-  setMemos,
-  saveMemo,
-  deleteMemo,
-}) => {
+const MemoEditor = ({ selectedMemo, saveMemo, deleteMemo }) => {
   const [content, setContent] = useState(selectedMemo?.content || "");
 
   useEffect(() => {
@@ -19,21 +13,10 @@ const MemoEditor = ({
   };
 
   const handleSaveMemo = () => {
-    const updatedMemo = { ...selectedMemo, content };
-    const updatedMemos = memos.map((memo) =>
-      memo.title === selectedMemo.title ? updatedMemo : memo,
-    );
-    setMemos(updatedMemos);
-    localStorage.setItem("memos", JSON.stringify(updatedMemos));
     saveMemo(content);
   };
 
   const handleDeleteMemo = () => {
-    const updatedMemos = memos.filter(
-      (memo) => memo.title !== selectedMemo.title,
-    );
-    setMemos(updatedMemos);
-    localStorage.setItem("memos", JSON.stringify(updatedMemos));
     deleteMemo();
   };
 

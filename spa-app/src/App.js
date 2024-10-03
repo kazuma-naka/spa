@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import MemoList from "./components/MemoList.js";
 import MemoEditor from "./components/MemoEditor.js";
 import "./App.css";
@@ -51,8 +51,6 @@ function App() {
     setSelectedMemo(null);
   }, [memos, selectedMemo]);
 
-  const memoizedMemos = useMemo(() => memos, [memos]);
-
   return (
     <div className="app-area">
       <div className="status-text-parent">
@@ -62,7 +60,7 @@ function App() {
       </div>
       <div className="app-container">
         <MemoList
-          memos={memoizedMemos}
+          memos={memos}
           setMemos={setMemos}
           selectedMemo={selectedMemo}
           setSelectedMemo={setSelectedMemo}
@@ -71,8 +69,6 @@ function App() {
         {selectedMemo && (
           <MemoEditor
             selectedMemo={selectedMemo}
-            memos={memoizedMemos}
-            setMemos={setMemos}
             saveMemo={saveMemo}
             deleteMemo={deleteMemo}
           />
