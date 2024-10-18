@@ -1,38 +1,99 @@
-.App {
-  text-align: center;
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-area {
+  width: 100%;
+  height: 100%;
+  background-color: #1c1e24;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-container {
+  width: auto;
+  height: auto;
   min-height: 100vh;
+  background-color: #282c34;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
   font-size: calc(10px + 2vmin);
   color: white;
+  border-radius: 10px;
+  margin-right: 4vw;
+  margin-left: 4vw;
 }
 
-.App-link {
-  color: #61dafb;
+.status-text-parent {
+  margin-left: 8vh;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.status-text {
+  color: #ccc;
+  padding-top: 2vh;
+}
+
+.memo-list {
+  max-width: 18vw;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 4vh;
+  margin-top: 8vh;
+}
+
+.memo-list li {
+  width: 18vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+button {
+  width: 8vh;
+  height: 8vh;
+  background-color: #4b4f57;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  font-size: 4vh;
+  margin-left: 4vh;
+}
+
+button:hover {
+  background-color: #5a5e67;
+}
+
+.memo-editor-container {
+  flex: 2;
+  margin-top: 8vh;
+  margin-left: 8vw;
+  margin-right: 4vw;
+}
+
+.memo-textarea {
+  width: 95%;
+  height: auto;
+  min-height: 64vh;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: x-large;
+}
+
+.memo-editor-buttons {
+  display: flex;
+  flex-direction: row;
+  margin-top: 4vh;
+  justify-content: space-between;
+}
+
+.memo-edit-button {
+  width: 63%;
+}
+
+.memo-delete-button {
+  width: 33%;
 }
