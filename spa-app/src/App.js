@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import MemoList from "./components/MemoList.js";
 import MemoEditor from "./components/MemoEditor.js";
+import AuthButton from "./components/AuthButton.js";
 import "./App.css";
 import String from "./String.js";
 
@@ -66,13 +67,16 @@ function App() {
           setSelectedMemo={setSelectedMemo}
           addMemo={addMemo}
         />
-        {selectedMemo && (
-          <MemoEditor
-            selectedMemo={selectedMemo}
-            saveMemo={saveMemo}
-            deleteMemo={deleteMemo}
-          />
-        )}
+        <div className="memoeditor-and-authbutton-parent">
+          <AuthButton />
+          {selectedMemo && (
+            <MemoEditor
+              selectedMemo={selectedMemo}
+              saveMemo={saveMemo}
+              deleteMemo={deleteMemo}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

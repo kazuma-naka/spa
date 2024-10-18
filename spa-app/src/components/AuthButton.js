@@ -4,7 +4,7 @@ import { useAuth } from "../auth/useAuth.js";
 const AuthButton = () => {
   const { isLoggedIn, login, logout } = useAuth();
   return (
-    <button onClick={isLoggedIn ? logout : login}>
+    <button className="auth-button" onClick={isLoggedIn ? logout : login}>
       {isLoggedIn ? "ログアウト" : "ログイン"}
     </button>
   );
