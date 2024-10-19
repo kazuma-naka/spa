@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useAuth } from "../hooks/AuthProvider.js";
 
 const MemoList = ({
   memos,
@@ -12,7 +13,7 @@ const MemoList = ({
     const storedMemos = JSON.parse(localStorage.getItem("memos")) || [];
     setMemos(storedMemos);
   }, [setMemos]);
-
+  const { isLoggedIn } = useAuth();
   return (
     <div className="memo-list-container">
       <ul className="memo-list">
@@ -34,7 +35,15 @@ const MemoList = ({
           </li>
         ))}
       </ul>
-      <button onClick={() => addMemo("新規メモ", memos)}>+</button>
+      <button
+        onClick={() => {
+          if (isLoggedIn) {
+            addMemo("新規メモ", memos);
+          }
+        }}
+      >
+        +
+      </button>
     </div>
   );
 };
@@ -44,7 +53,7 @@ MemoList.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   setMemos: PropTypes.func.isRequired,
   setSelectedMemo: PropTypes.func.isRequired,
