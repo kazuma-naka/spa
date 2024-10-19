@@ -53,7 +53,7 @@ MemoList.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   setMemos: PropTypes.func.isRequired,
   setSelectedMemo: PropTypes.func.isRequired,

@@ -29,7 +29,7 @@ function AppContent() {
       setMemos((prevMemos) => [...prevMemos, newMemo]);
       setSelectedMemo(newMemo);
     },
-    [memos]
+    [memos],
   );
 
   const saveMemo = useCallback(
@@ -41,12 +41,12 @@ function AppContent() {
         content: newContent,
       };
       const updatedMemos = memos.map((memo) =>
-        memo === selectedMemo ? updatedMemo : memo
+        memo === selectedMemo ? updatedMemo : memo,
       );
       setMemos(updatedMemos);
       setSelectedMemo(updatedMemo);
     },
-    [memos, selectedMemo]
+    [memos, selectedMemo],
   );
 
   const deleteMemo = useCallback(() => {
