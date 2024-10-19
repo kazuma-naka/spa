@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import MemoList from "./components/MemoList.js";
 import MemoEditor from "./components/MemoEditor.js";
+import AuthButton from "./components/AuthButton.js";
+import { AuthProvider, useAuth } from "./hooks/AuthProvider.js";
 import "./App.css";
 import String from "./String.js";
 
-function App() {
+function AppContent() {
+  const { isLoggedIn } = useAuth();
   const [memos, setMemos] = useState([]);
   const [selectedMemo, setSelectedMemo] = useState(null);
 
@@ -55,7 +58,7 @@ function App() {
     <div className="app-area">
       <div className="status-text-parent">
         <h2 className="status-text">
-          {selectedMemo ? `編集 ${selectedMemo.title}` : "一覧"}
+          {isLoggedIn ? "ログイン済" : "未ログイン"}
         </h2>
       </div>
       <div className="app-container">
@@ -66,15 +69,26 @@ function App() {
           setSelectedMemo={setSelectedMemo}
           addMemo={addMemo}
         />
-        {selectedMemo && (
-          <MemoEditor
-            selectedMemo={selectedMemo}
-            saveMemo={saveMemo}
-            deleteMemo={deleteMemo}
-          />
-        )}
+        <div className="memoeditor-and-authbutton-parent">
+          <AuthButton />
+          {selectedMemo && (
+            <MemoEditor
+              selectedMemo={selectedMemo}
+              saveMemo={saveMemo}
+              deleteMemo={deleteMemo}
+            />
+          )}
+        </div>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
