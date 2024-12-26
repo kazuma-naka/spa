@@ -1,11 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const useMemoEditor = (selectedMemo, saveMemo, deleteMemo) => {
   const [content, setContent] = useState(selectedMemo?.content || "");
-
-  useEffect(() => {
-    setContent(selectedMemo?.content || "");
-  }, [selectedMemo]);
 
   const handleContentChange = (e) => {
     setContent(e.target.value);
