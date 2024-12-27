@@ -1,86 +1,93 @@
-import { renderHook, act } from '@testing-library/react';
-import useMemoEditor from '../../hooks/useMemoEditor';
+import { renderHook, act } from "@testing-library/react";
+import useMemoEditor from "../../hooks/useMemoEditor";
 
-describe('useMemoEditor', () => {
-  let saveMemoMock;
-  let deleteMemoMock;
+describe("useMemoEditorのテスト", () => {
+  let savedMemos = [];
+  let deletedMemo = null;
+
+  const saveMemo = (content) => {
+    savedMemos.push(content);
+  };
+
+  const deleteMemo = (memo) => {
+    deletedMemo = memo;
+  };
 
   beforeEach(() => {
-    saveMemoMock = jest.fn();
-    deleteMemoMock = jest.fn();
+    savedMemos = [];
+    deletedMemo = null;
   });
 
-  it('should initialize with the selectedMemo content', () => {
-    const selectedMemo = { content: 'Initial memo content' };
+  it("初期状態でメモの内容をテスト", () => {
+    const selectedMemo = { content: "初期メモの内容" };
 
     const { result } = renderHook(() =>
-      useMemoEditor(selectedMemo, saveMemoMock, deleteMemoMock)
+      useMemoEditor(selectedMemo, saveMemo, deleteMemo)
     );
 
-    expect(result.current.content).toBe('Initial memo content');
+    expect(result.current.content).toBe("初期メモの内容");
   });
 
-  it('should update content when selectedMemo changes', () => {
+  it("選択されたメモが変更された場合、内容も更新される。 useEffect を削除したため false になる", () => {
     const { result, rerender } = renderHook(
-      ({ selectedMemo }) =>
-        useMemoEditor(selectedMemo, saveMemoMock, deleteMemoMock),
+      ({ selectedMemo }) => useMemoEditor(selectedMemo, saveMemo, deleteMemo),
       {
-        initialProps: { selectedMemo: { content: 'First memo content' } },
+        initialProps: { selectedMemo: { content: "最初のメモの内容" } },
       }
     );
 
-    expect(result.current.content).toBe('First memo content');
+    expect(result.current.content).toBe("最初のメモの内容");
 
-    rerender({ selectedMemo: { content: 'Updated memo content' } });
+    rerender({ selectedMemo: { content: "更新されたメモの内容" } });
 
-    expect(result.current.content).toBe('Updated memo content');
+    expect(result.current.content).toBe("更新されたメモの内容");
   });
 
-  it('should handle content changes correctly', () => {
-    const selectedMemo = { content: 'Initial memo content' };
+  it("handleContentChange で内容が変更された場合、内容が正しく反映されるかテストする", () => {
+    const selectedMemo = { content: "初期メモの内容" };
 
     const { result } = renderHook(() =>
-      useMemoEditor(selectedMemo, saveMemoMock, deleteMemoMock)
+      useMemoEditor(selectedMemo, saveMemo, deleteMemo)
     );
 
     act(() => {
       result.current.handleContentChange({
-        target: { value: 'Updated memo content' },
+        target: { value: "更新されたメモの内容" },
       });
     });
 
-    expect(result.current.content).toBe('Updated memo content');
+    expect(result.current.content).toBe("更新されたメモの内容");
   });
 
-  it('should call saveMemo with the correct content', () => {
-    const selectedMemo = { content: 'Initial memo content' };
+  it("保存機能で正しい内容が保存される", () => {
+    const selectedMemo = { content: "初期メモの内容" };
 
     const { result } = renderHook(() =>
-      useMemoEditor(selectedMemo, saveMemoMock, deleteMemoMock)
+      useMemoEditor(selectedMemo, saveMemo, deleteMemo)
     );
 
     act(() => {
-      result.current.setContent('Saved memo content');
+      result.current.setContent("保存されたメモの内容");
     });
 
     act(() => {
       result.current.handleSaveMemo();
     });
 
-    expect(saveMemoMock).toHaveBeenCalledWith('Saved memo content');
+    expect(savedMemos).toContain("保存されたメモの内容");
   });
 
-  it('should call deleteMemo', () => {
-    const selectedMemo = { content: 'Initial memo content' };
+  it("削除機能のテスト", () => {
+    const selectedMemo = { content: "初期メモの内容" };
 
     const { result } = renderHook(() =>
-      useMemoEditor(selectedMemo, saveMemoMock, deleteMemoMock)
+      useMemoEditor(selectedMemo, saveMemo, deleteMemo)
     );
 
     act(() => {
       result.current.handleDeleteMemo();
     });
 
-    expect(deleteMemoMock).toHaveBeenCalled();
+    expect(deletedMemo).toEqual(selectedMemo);
   });
 });

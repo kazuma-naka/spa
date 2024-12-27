@@ -12,7 +12,7 @@ const useMemoEditor = (selectedMemo, saveMemo, deleteMemo) => {
   };
 
   const handleDeleteMemo = () => {
-    deleteMemo();
+    deleteMemo(selectedMemo);
   };
 
   return {
