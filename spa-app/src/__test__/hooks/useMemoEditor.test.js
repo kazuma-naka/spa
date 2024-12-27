@@ -18,6 +18,11 @@ describe("useMemoEditorのテスト", () => {
     deletedMemo = null;
   });
 
+  afterEach(() => {
+    savedMemos = [];
+    deletedMemo = null;
+  });
+
   it("初期状態でメモの内容をテスト", () => {
     const selectedMemo = { content: "初期メモの内容" };
 
