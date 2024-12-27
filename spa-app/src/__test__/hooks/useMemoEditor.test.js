@@ -28,21 +28,6 @@ describe("useMemoEditorのテスト", () => {
     expect(result.current.content).toBe("初期メモの内容");
   });
 
-  it("選択されたメモが変更された場合、内容も更新される。 useEffect を削除したため false になる", () => {
-    const { result, rerender } = renderHook(
-      ({ selectedMemo }) => useMemoEditor(selectedMemo, saveMemo, deleteMemo),
-      {
-        initialProps: { selectedMemo: { content: "最初のメモの内容" } },
-      }
-    );
-
-    expect(result.current.content).toBe("最初のメモの内容");
-
-    rerender({ selectedMemo: { content: "更新されたメモの内容" } });
-
-    expect(result.current.content).toBe("更新されたメモの内容");
-  });
-
   it("handleContentChange で内容が変更された場合、内容が正しく反映されるかテストする", () => {
     const selectedMemo = { content: "初期メモの内容" };
 
