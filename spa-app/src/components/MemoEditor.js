@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import useMemoEditor from "../hooks/useMemoEditor.js";
 
 const MemoEditor = ({ selectedMemo, saveMemo, deleteMemo }) => {
-  const [content, setContent] = useState(selectedMemo?.content || "");
-
-  useEffect(() => {
-    setContent(selectedMemo?.content || "");
-  }, [selectedMemo]);
-
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
-
-  const handleSaveMemo = () => {
-    saveMemo(content);
-  };
-
-  const handleDeleteMemo = () => {
-    deleteMemo();
-  };
+  const {
+    content,
+    handleContentChange,
+    handleSaveMemo,
+    handleDeleteMemo,
+  } = useMemoEditor(selectedMemo, saveMemo, deleteMemo);
 
   return (
     <div className="memo-editor-container">
@@ -44,13 +34,6 @@ MemoEditor.propTypes = {
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   }),
-  memos: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  setMemos: PropTypes.func.isRequired,
   saveMemo: PropTypes.func.isRequired,
   deleteMemo: PropTypes.func.isRequired,
 };
